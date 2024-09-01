@@ -3,7 +3,6 @@ package com.study.blog.config.jwt;
 import com.study.blog.domain.User;
 import com.study.blog.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

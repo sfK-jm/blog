@@ -24,7 +24,7 @@ public class WebSecurityConfig {
 
     private final UserDetailsService userService;
 
-    //스프링 시쿠리티 기능 비활성화
+    //스프링 시큐리티 기능 비활성화
     @Bean
     public WebSecurityCustomizer configure() {
         return (web) -> web.ignoring()
@@ -36,14 +36,14 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests(auth -> auth
+                .authorizeRequests(auth -> auth //인증, 인가 설정
                         .requestMatchers(
                                 new AntPathRequestMatcher("/login"),
                                 new AntPathRequestMatcher("/signup"),
                                 new AntPathRequestMatcher("/user")
                         ).permitAll()
                         .anyRequest().authenticated())
-                .formLogin(formLogin -> formLogin
+                .formLogin(formLogin -> formLogin //폼 기반 로그인 설정
                         .loginPage("/login")
                         .defaultSuccessUrl("/articles")
                 )
@@ -57,10 +57,10 @@ public class WebSecurityConfig {
 
     //인증 관리자 관련 설정
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http,
-                                                       BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userService) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
+                                                       UserDetailService userService) throws Exception {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
+        authProvider.setUserDetailsService(userService); //사용자 정보 서비스 설정
         authProvider.setPasswordEncoder(bCryptPasswordEncoder);
         return new ProviderManager(authProvider);
     }
